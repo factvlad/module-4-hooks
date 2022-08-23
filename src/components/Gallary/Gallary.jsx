@@ -2,30 +2,29 @@ import { Component } from "react";
 
 class Gallary extends Component {
   state = {
-    heroes: [],
+    goods: [],
   };
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.searchName !== this.props.searchName) {
-      this.fetchHeros();
-    }
+
+  componentDidMount(){
+    this.fetchHeros() 
   }
+
   fetchHeros() {
-    fetch(`https://swapi.py4e.com/api/people/?search=${this.props.searchName}`)
+    fetch(`https://62becfba0bc9b125615fd0f7.mockapi.io/api/products`)
       .then((result) => result.json())
-      .then((data) => data.results)
-      .then((heroes) =>
+      .then((goods) =>
         this.setState({
-          heroes: heroes,
+          goods
         })
       );
   }
   render() {
-    const { heroes } = this.state;
+    const { goods } = this.state;
     return (
       <ol>
-        {heroes.map((item) => (
-          <li key={item.name} onClick={() => this.props.onClick(item)}>
-            {item.name} - {item.gender}
+        {goods.map((item) => (
+          <li key={item.name} onClick={() => this.props.onClick(item.id)}>
+            {item.name} - {item.price}
           </li>
         ))}
       </ol>
